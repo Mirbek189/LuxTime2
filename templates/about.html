@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>О нас</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #222;
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 40px;
+            margin: 0;
+        }
+
+        section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: #333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            font-size: 36px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+
+        /* Контейнер для слайдера */
+        .slider-container {
+            width: 100%;
+            overflow: hidden; /* Скрыть все, что выходит за пределы */
+            position: relative;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out; /* Плавное переключение между изображениями */
+            width: 100%;
+        }
+
+        .slider img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Кнопки для навигации */
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            z-index: 10;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        ul li::before {
+            content: "•";
+            color: #fff;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .social-links {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .social-links li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 24px;
+        }
+
+        .social-links a:hover {
+            color: #007BFF;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>О компании</h1>
+    </header>
+
+    <section id="about-us">
+        <h2>Знакомьтесь с нами</h2>
+
+        <!-- Контейнер слайдера -->
+        <div class="slider-container">
+            <div class="slider">
+                <img src="https://cdn.pixabay.com/photo/2020/01/31/08/38/rolex-4807479_960_720.jpg" alt="Rolex 1">
+                <img src="https://cdn.pixabay.com/photo/2018/03/26/22/17/watch-3264349_960_720.jpg" alt="Rolex 2">
+                <img src="https://cdn.pixabay.com/photo/2018/03/26/19/06/chrome-3263652_1280.jpg" alt="Rolex 3">
+                <img src="https://cdn.pixabay.com/photo/2018/07/02/11/13/rolex-3511356_1280.jpg" alt="Rolex 4">
+            </div>
+
+            <!-- Кнопки для переключения слайдов -->
+            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="next" onclick="moveSlide(1)">&#10095;</button>
+        </div>
+
+        <p>Мы — команда профессионалов, создающая инновационные решения для вашего бизнеса. Наша цель — делать технологии доступными для всех, обеспечивая высококачественный сервис и поддержку. С момента основания мы достигли многого и продолжаем расти и развиваться.</p>
+
+        <h3>Наши достижения:</h3>
+        <ul>
+            <li>Победа в международном конкурсе инноваций в 2023 году.</li>
+            <li>Сотрудничество с крупными мировыми брендами.</li>
+            <li>Разработка передовых решений для различных отраслей бизнеса.</li>
+        </ul>
+
+        <h3>Следите за нами в социальных сетях:</h3>
+        <ul class="social-links">
+            <li><a href="https://www.facebook.com" target="_blank">Facebook</a></li>
+            <li><a href="https://www.twitter.com" target="_blank">Twitter</a></li>
+            <li><a href="https://www.linkedin.com" target="_blank">LinkedIn</a></li>
+        </ul>
+    </section>
+
+    <script>
+        let slideIndex = 0; // Индекс текущего слайда
+        const slides = document.querySelectorAll('.slider img'); // Все изображения в слайдере
+        const nextButton = document.querySelector('.next');
+        const prevButton = document.querySelector('.prev');
+
+        // Функция для перехода к следующему или предыдущему слайду
+        function moveSlide(direction) {
+            // Если направление = 1 (следующий слайд), проверяем, не находимся ли мы на последнем слайде
+            if (direction === 1 && slideIndex === slides.length - 1) {
+                return; // Если на последнем слайде, не переходим дальше
+            }
+
+            // Если направление = -1 (предыдущий слайд), проверяем, не находимся ли мы на первом слайде
+            if (direction === -1 && slideIndex === 0) {
+                return; // Если на первом слайде, не переходим назад
+            }
+
+            slideIndex += direction; // Увеличиваем или уменьшаем индекс в зависимости от направления
+
+            updateSlider(); // Обновляем слайдер
+        }
+
+        // Обновление позиции слайдера
+        function updateSlider() {
+            const newTransformValue = -slideIndex * 100; // Позиция для текущего слайда
+            document.querySelector('.slider').style.transform = `translateX(${newTransformValue}%)`;
+
+            // Отключаем кнопку "Следующий", если мы на последнем слайде
+            if (slideIndex === slides.length - 1) {
+                nextButton.disabled = true; // Делаем кнопку "Следующий" неактивной
+            } else {
+                nextButton.disabled = false; // Включаем кнопку "Следующий"
+            }
+
+            // Отключаем кнопку "Предыдущий", если мы на первом слайде
+            if (slideIndex === 0) {
+                prevButton.disabled = true; // Делаем кнопку "Предыдущий" неактивной
+            } else {
+                prevButton.disabled = false; // Включаем кнопку "Предыдущий"
+            }
+        }
+
+        // Инициализация слайдера
+        updateSlider();
+    </script>
+
+</body>
+
+</html>
+
+
+
+
