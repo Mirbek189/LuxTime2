@@ -1,138 +1,390 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Коллекция часов LuxTime</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            color: #333;
-        }
-        p.subtitle {
-            text-align: center;
-            color: #555;
-            margin-bottom: 20px;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-        }
-        .card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            width: 300px;
-            overflow: hidden;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        .card:hover {
-            transform: translateY(-10px);
-        }
-        .card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        .card-body {
-            padding: 15px;
-        }
-        .card-body h3 {
-            font-size: 1.2em;
-            color: #333;
-            margin: 10px 0;
-        }
-        .card-body p {
-            color: #777;
-            font-size: 0.9em;
-            margin: 5px 0;
-        }
-        .price {
-            font-size: 1.1em;
-            color: #e60000;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Коллекция часов LuxTime</title>
+  <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --main-bg-color: #f4f4f4;
+      --card-bg-color: #fff;
+      --primary-color: #e60000;
+      --text-color: #333;
+      --subtitle-color: #555;
+      --price-color: #e60000;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --transition-time: 0.3s;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--main-bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark {
+      --main-bg-color: #121212;
+      --card-bg-color: #1e1e1e;
+      --primary-color: #ff4d4d;
+      --text-color: #eee;
+      --subtitle-color: #ccc;
+      --price-color: #ff4d4d;
+      --shadow-color: rgba(255, 77, 77, 0.3);
+      background-color: var(--main-bg-color);
+      color: var(--text-color);
+    }
+    h1 {
+      text-align: center;
+      margin: 30px 0 10px;
+      font-weight: 700;
+      font-size: 2.5rem;
+    }
+    p.subtitle {
+      text-align: center;
+      color: var(--subtitle-color);
+      margin-bottom: 30px;
+      font-size: 1.2rem;
+    }
+    .filters {
+      max-width: 400px;
+      margin: 0 auto 40px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .filters label {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.9rem;
+      color: var(--text-color);
+    }
+    body.dark .filters label {
+      color: var(--text-color);
+    }
+    .filters input[type="number"] {
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    .filters input[type="number"]:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+    main.container {
+      max-width: 1200px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
+    .card {
+      background-color: var(--card-bg-color);
+      border-radius: 15px;
+      box-shadow: 0 8px 15px var(--shadow-color);
+      width: 280px;
+      overflow: hidden;
+      text-align: center;
+      cursor: default;
+      transition: transform var(--transition-time), box-shadow var(--transition-time);
+      opacity: 0;
+      animation: fadeInUp 0.8s forwards;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px var(--shadow-color);
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 3px solid var(--primary-color);
+      transition: transform 0.3s ease;
+    }
+    .card:hover img {
+      transform: scale(1.05);
+    }
+    .card-body {
+      padding: 15px 20px;
+      flex-grow: 1;
+    }
+    .card-body h3 {
+      font-size: 1.3rem;
+      color: var(--text-color);
+      margin: 10px 0 5px;
+    }
+    .card-body p {
+      color: var(--subtitle-color);
+      font-size: 0.95rem;
+      margin: 5px 0;
+    }
+    .price {
+      font-size: 1.2rem;
+      color: var(--price-color);
+      font-weight: 700;
+      margin-top: 15px;
+    }
+    .buttons {
+      padding: 10px 20px 20px;
+      display: flex;
+      justify-content: space-around;
+      gap: 10px;
+    }
+    .btn-details, .btn-cart, .btn-fav {
+      padding: 8px 12px;
+      border-radius: 25px;
+      border: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: #fff;
+      user-select: none;
+    }
+    .btn-details {
+      background-color: var(--primary-color);
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-details:hover {
+      background-color: #b30000;
+    }
+    .btn-cart {
+      background-color: #28a745;
+    }
+    .btn-cart:hover {
+      background-color: #1e7e34;
+    }
+    .btn-fav {
+      background-color: #ffc107;
+      color: #333;
+    }
+    .btn-fav.active {
+      background-color: #ff6f00;
+      color: #fff;
+    }
+    .btn-fav:hover {
+      background-color: #ff6f00;
+      color: #fff;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .dark-toggle {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background-color: var(--primary-color);
+      border: none;
+      border-radius: 20px;
+      width: 50px;
+      height: 28px;
+      cursor: pointer;
+      box-shadow: 0 0 8px var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px 5px;
+      transition: background-color 0.3s;
+      z-index: 1000;
+    }
+    .dark-toggle .circle {
+      background-color: #fff;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      transition: transform 0.3s ease;
+    }
+    body.dark .dark-toggle {
+      background-color: #444;
+      box-shadow: 0 0 8px #888;
+    }
+    body.dark .dark-toggle .circle {
+      transform: translateX(22px);
+    }
+    @media (max-width: 900px) {
+      main.container {
+        gap: 20px;
+      }
+      .card {
+        width: 45%;
+      }
+      .filters {
+        max-width: 100%;
+        padding: 0 20px;
+      }
+    }
+    @media (max-width: 600px) {
+      .card {
+        width: 90%;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
+  <button class="dark-toggle" aria-label="Переключить тёмную тему" title="Тёмная тема">
+    <div class="circle"></div>
+  </button>
+
+  <header>
     <h1>Эксклюзивные Часы LuxTime</h1>
     <p class="subtitle">Непревзойденный стиль, точность и надежность. Часы, которые говорят за себя.</p>
+  </header>
 
-    <div class="container">
-        <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Rolex_Submariner_16610.jpg/320px-Rolex_Submariner_16610.jpg" alt="Rolex Submariner" />
-            <div class="card-body">
-                <h3>Rolex Submariner</h3>
-                <p>Мужская модель</p>
-                <p>Год выпуска: 2020</p>
-                <p class="price">Цена: $8,800</p>
-            </div>
-        </div>
+  <section class="filters" aria-label="Фильтры по цене">
+    <label for="minPrice">
+      Мин. цена ($):
+      <input type="number" id="minPrice" name="minPrice" min="0" step="100" placeholder="0" />
+    </label>
+    <label for="maxPrice">
+      Макс. цена ($):
+      <input type="number" id="maxPrice" name="maxPrice" min="0" step="100" placeholder="10000" />
+    </label>
+  </section>
 
-        <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Rolex_Datejust_116234_36mm.jpg/320px-Rolex_Datejust_116234_36mm.jpg" alt="Rolex Datejust" />
-            <div class="card-body">
-                <h3>Rolex Datejust</h3>
-                <p>Женская модель</p>
-                <p>Год выпуска: 2022</p>
-                <p class="price">Цена: $7,100</p>
-            </div>
-        </div>
+  <main class="container" id="cardsContainer" aria-live="polite" aria-atomic="true">
+  </main>
 
-        <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Rolex_Oyster_Perpetual_%2814224500746%29.jpg/320px-Rolex_Oyster_Perpetual_%2814224500746%29.jpg" alt="Rolex Oyster Perpetual" />
-            <div class="card-body">
-                <h3>Rolex Oyster Perpetual</h3>
-                <p>Мужская модель</p>
-                <p>Год выпуска: 2022</p>
-                <p class="price">Цена: $6,500</p>
-            </div>
-        </div>
+<script>
+  const watches = [
+    {
+      id: 1,
+      name: 'Rolex Submariner',
+      description: 'Мужская модель',
+      year: 2020,
+      price: 8800,
+      img: 'https://images.pexels.com/photos/364822/rolex-watch-time-luxury-364822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    },
+    {
+      id: 2,
+      name: 'Omega Seamaster',
+      description: 'Мужская модель',
+      year: 2019,
+      price: 5300,
+      img: 'https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    },
+    {
+      id: 3,
+      name: 'Cartier Ballon Bleu',
+      description: 'Женская модель',
+      year: 2021,
+      price: 7000,
+      img: 'https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    },
+  ];
 
-        <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Rolex_Explorer_214270_Black_Dial_%28Front%29.jpg/320px-Rolex_Explorer_214270_Black_Dial_%28Front%29.jpg" alt="Rolex Explorer" />
-            <div class="card-body">
-                <h3>Rolex Explorer</h3>
-                <p>Мужская модель</p>
-                <p>Год выпуска: 2023</p>
-                <p class="price">Цена: $6,700</p>
-            </div>
-        </div>
+  const container = document.getElementById('cardsContainer');
+  const minPriceInput = document.getElementById('minPrice');
+  const maxPriceInput = document.getElementById('maxPrice');
 
-        <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Rolex_Yacht-Master_II.jpg/320px-Rolex_Yacht-Master_II.jpg" alt="Rolex Yacht-Master II" />
-            <div class="card-body">
-                <h3>Rolex Yacht-Master II</h3>
-                <p>Мужская модель</p>
-                <p>Год выпуска: 2021</p>
-                <p class="price">Цена: $9,400</p>
-            </div>
-        </div>
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-        <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Rolex_Daytona_116520.jpg/320px-Rolex_Daytona_116520.jpg" alt="Rolex Daytona" />
-            <div class="card-body">
-                <h3>Rolex Daytona</h3>
-                <p>Мужская модель</p>
-                <p>Год выпуска: 2020</p>
-                <p class="price">Цена: $12,000</p>
-            </div>
+  function renderCards(filterMin = 0, filterMax = Infinity) {
+    container.innerHTML = '';
+
+    const filtered = watches.filter(watch => watch.price >= filterMin && watch.price <= filterMax);
+
+    if(filtered.length === 0) {
+      container.innerHTML = '<p>Нет часов в выбранном ценовом диапазоне.</p>';
+      return;
+    }
+
+    filtered.forEach((watch, i) => {
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.style.animationDelay = `${i * 0.1}s`;
+      card.setAttribute('tabindex', '0');
+      card.innerHTML = `
+        <img src="${watch.img}" alt="Фото часов ${watch.name}" />
+        <div class="card-body">
+          <h3>${watch.name}</h3>
+          <p>${watch.description}, ${watch.year} год</p>
+          <p class="price">$${watch.price.toLocaleString()}</p>
         </div>
-    </div>
+        <div class="buttons">
+          <button class="btn-cart" aria-label="Добавить ${watch.name} в корзину">В корзину</button>
+          <button class="btn-fav" aria-label="Добавить ${watch.name} в избранное">${favorites.includes(watch.id) ? '★' : '☆'}</button>
+        </div>
+      `;
+
+      const btnCart = card.querySelector('.btn-cart');
+      btnCart.addEventListener('click', () => {
+        if (!cart.includes(watch.id)) {
+          cart.push(watch.id);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          alert(`Добавлено в корзину: ${watch.name}`);
+        } else {
+          alert(`${watch.name} уже в корзине.`);
+        }
+      });
+
+      const btnFav = card.querySelector('.btn-fav');
+      if (favorites.includes(watch.id)) {
+        btnFav.classList.add('active');
+      }
+      btnFav.addEventListener('click', () => {
+        const index = favorites.indexOf(watch.id);
+        if (index === -1) {
+          favorites.push(watch.id);
+          btnFav.textContent = '★';
+          btnFav.classList.add('active');
+        } else {
+          favorites.splice(index, 1);
+          btnFav.textContent = '☆';
+          btnFav.classList.remove('active');
+        }
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+      });
+
+      container.appendChild(card);
+    });
+  }
+
+  function applyFilters() {
+    const min = Number(minPriceInput.value) || 0;
+    const max = Number(maxPriceInput.value) || Infinity;
+    renderCards(min, max);
+  }
+
+  minPriceInput.addEventListener('input', applyFilters);
+  maxPriceInput.addEventListener('input', applyFilters);
+
+  const darkToggle = document.querySelector('.dark-toggle');
+  const body = document.body;
+
+  if(localStorage.getItem('darkMode') === 'true') {
+    body.classList.add('dark');
+  }
+
+  darkToggle.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    localStorage.setItem('darkMode', body.classList.contains('dark'));
+  });
+
+  renderCards();
+</script>
 
 </body>
 </html>
+
 
