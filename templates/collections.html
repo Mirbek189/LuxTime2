@@ -1,12 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Колекция</title>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Коллекция часов LuxTime</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 300px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 15px;
+        }
+        .card-body h3 {
+            font-size: 1.2em;
+            color: #333;
+            margin: 10px 0;
+        }
+        .card-body p {
+            color: #777;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        .price {
+            font-size: 1.1em;
+            color: #e60000;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-<h1>Эксклюзивные Часы LuxTime</h1>
-      <p>Непревзойденный стиль, точность и надежность. Часы, которые говорят за себя.</p>
+
+    <h1>Эксклюзивные Часы LuxTime</h1>
+    <p class="subtitle">Непревзойденный стиль, точность и надежность. Часы, которые говорят за себя.</p>
+
+    <div class="container">
+        <div class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Rolex_Submariner_16610.jpg/320px-Rolex_Submariner_16610.jpg" alt="Rolex Submariner" />
+            <div class="card-body">
+                <h3>Rolex Submariner</h3>
+                <p>Мужская модель</p>
+                <p>Год выпуска: 2020</p>
+                <p class="price">Цена: $8,800</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Rolex_Datejust_116234_36mm.jpg/320px-Rolex_Datejust_116234_36mm.jpg" alt="Rolex Datejust" />
+            <div class="card-body">
+                <h3>Rolex Datejust</h3>
+                <p>Женская модель</p>
+                <p>Год выпуска: 2022</p>
+                <p class="price">Цена: $7,100</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Rolex_Oyster_Perpetual_%2814224500746%29.jpg/320px-Rolex_Oyster_Perpetual_%2814224500746%29.jpg" alt="Rolex Oyster Perpetual" />
+            <div class="card-body">
+                <h3>Rolex Oyster Perpetual</h3>
+                <p>Мужская модель</p>
+                <p>Год выпуска: 2022</p>
+                <p class="price">Цена: $6,500</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Rolex_Explorer_214270_Black_Dial_%28Front%29.jpg/320px-Rolex_Explorer_214270_Black_Dial_%28Front%29.jpg" alt="Rolex Explorer" />
+            <div class="card-body">
+                <h3>Rolex Explorer</h3>
+                <p>Мужская модель</p>
+                <p>Год выпуска: 2023</p>
+                <p class="price">Цена: $6,700</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Rolex_Yacht-Master_II.jpg/320px-Rolex_Yacht-Master_II.jpg" alt="Rolex Yacht-Master II" />
+            <div class="card-body">
+                <h3>Rolex Yacht-Master II</h3>
+                <p>Мужская модель</p>
+                <p>Год выпуска: 2021</p>
+                <p class="price">Цена: $9,400</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Rolex_Daytona_116520.jpg/320px-Rolex_Daytona_116520.jpg" alt="Rolex Daytona" />
+            <div class="card-body">
+                <h3>Rolex Daytona</h3>
+                <p>Мужская модель</p>
+                <p>Год выпуска: 2020</p>
+                <p class="price">Цена: $12,000</p>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
+
