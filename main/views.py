@@ -70,5 +70,8 @@ def login_user(request):
 def collections(request):
     return render(request, 'collections.html')
 
+#Страница о нас
 def about(request):
     return render(request, 'about.html')
+
+
