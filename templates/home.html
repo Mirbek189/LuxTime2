@@ -18,7 +18,7 @@
     .hero {
       position: relative;
       height: 100vh;
-      background-image: url('https://cdn.pixabay.com/photo/2020/01/31/08/38/rolex-4807479_960_720.jpg');
+      background-image: url('https://images.unsplash.com/photo-1475257026007-0753d5429e10?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
       background-size: cover;
       background-position: center;
       display: flex;
@@ -209,6 +209,65 @@
       </a>
     </div>
   </section>
+<!-- Чистый блоки с часами и описанием -->
+<section class="max-w-7xl mx-auto mt-32 px-6 md:px-12 space-y-32">
+
+  <!-- Первый: картинка слева, текст справа -->
+  <div class="flex flex-col md:flex-row items-center gap-12">
+    <img
+      src="https://images.unsplash.com/photo-1606744188285-d0a49e58f538?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Rolex Submariner"
+      class="w-full md:w-1/2 rounded-2xl object-cover"
+      loading="lazy"
+    />
+    <div class="text-white md:w-1/2">
+      <h3 class="text-5xl font-extrabold mb-6">Rolex Submariner</h3>
+      <p class="text-2xl text-gray-300 leading-relaxed">
+        Легендарные часы, которые покорили глубины. Rolex Submariner — это не просто водонепроницаемость,
+        это смелость, стиль и престиж в каждом движении. Идеальны для тех, кто требует надёжности
+        в самых экстремальных условиях. С Submariner вы готовы к любой глубине — и к любому вызову.
+      </p>
+    </div>
+  </div>
+
+  <!-- Второй: картинка справа, текст слева -->
+  <div class="flex flex-col md:flex-row-reverse items-center gap-12">
+    <img
+      src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Rolex Daytona"
+      class="w-full md:w-1/2 rounded-2xl object-cover"
+      loading="lazy"
+    />
+    <div class="text-white md:w-1/2">
+      <h3 class="text-5xl font-extrabold mb-6">Rolex Daytona</h3>
+      <p class="text-2xl text-gray-300 leading-relaxed">
+        Символ точности и скорости. Rolex Daytona — идеальный спутник для победителей.
+        Его хронограф создан для соревнований, а дизайн — для восхищения. Это выбор гонщиков,
+        коллекционеров и всех, кто стремится к совершенству. В каждой секунде — энергия движения.
+      </p>
+    </div>
+  </div>
+
+  <!-- Третий: картинка слева, текст справа -->
+  <div class="flex flex-col md:flex-row items-center gap-12">
+    <img
+      src="https://images.unsplash.com/photo-1662384197911-e82189f4dc60?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Rolex Explorer"
+      class="w-full md:w-1/2 rounded-2xl object-cover"
+      loading="lazy"
+    />
+    <div class="text-white md:w-1/2">
+      <h3 class="text-5xl font-extrabold mb-6">Rolex Explorer</h3>
+      <p class="text-2xl text-gray-300 leading-relaxed">
+        Для тех, кто исследует мир. Explorer — это прочность, точность и дух приключений.
+        Эти часы прошли испытания горами, пещерами и ледниками. Они выдерживают экстремальные
+        условия и при этом остаются символом элегантности. Выбирайте Explorer — для путей, которые выбираете вы.
+      </p>
+    </div>
+  </div>
+
+</section>
+
 
 <script>
   const card = document.getElementById('threeDCard');
