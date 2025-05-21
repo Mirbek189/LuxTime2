@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --main-bg-color: #f4f4f4;
+      --main-bg-color: rgba(244, 244, 244, 0.85);
       --card-bg-color: #fff;
       --primary-color: #e60000;
       --text-color: #333;
@@ -20,19 +20,35 @@
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: var(--main-bg-color);
+      /* Фоновое изображение 4K */
+      background-image:
+        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
       color: var(--text-color);
       transition: background-color 0.3s, color 0.3s;
+      /* чтобы фон подложка влияла на основной bg */
+      background-blend-mode: overlay;
     }
     body.dark {
-      --main-bg-color: #121212;
+      --main-bg-color: rgba(18, 18, 18, 0.85);
       --card-bg-color: #1e1e1e;
       --primary-color: #ff4d4d;
       --text-color: #eee;
       --subtitle-color: #ccc;
       --price-color: #ff4d4d;
       --shadow-color: rgba(255, 77, 77, 0.3);
-      background-color: var(--main-bg-color);
+      background-image:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=3840&q=80');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-blend-mode: overlay;
       color: var(--text-color);
     }
     h1 {
@@ -386,5 +402,6 @@
 
 </body>
 </html>
+
 
 

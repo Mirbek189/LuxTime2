@@ -75,3 +75,6 @@ def about(request):
     return render(request, 'about.html')
 
 
+#Страница личный кабинет
+def account(request):
+    return render(request, 'account.html')

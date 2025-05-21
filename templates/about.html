@@ -2,22 +2,36 @@
 <html lang="ru">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>О нас</title>
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
             padding: 0;
-            background-color: #000;
+            /* Задний фон - 4K изображение */
+            background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=3840&q=80');
+            background-size: cover; /* масштабируем под экран, сохраняя пропорции */
+            background-position: center center;
+            background-repeat: no-repeat;
             color: #fff;
             line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Полупрозрачный затемнённый оверлей для читаемости текста */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
         }
 
         header {
-            background-color: #222;
+            background-color: rgba(34, 34, 34, 0.8);
             color: #fff;
             padding: 40px 20px;
             text-align: center;
@@ -33,8 +47,8 @@
             max-width: 1200px;
             margin: 40px auto;
             padding: 40px;
-            background-color: #333;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(51, 51, 51, 0.85);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             border-radius: 8px;
         }
 
@@ -53,13 +67,13 @@
         /* Контейнер для слайдера */
         .slider-container {
             width: 100%;
-            overflow: hidden; /* Скрыть все, что выходит за пределы */
+            overflow: hidden;
             position: relative;
         }
 
         .slider {
             display: flex;
-            transition: transform 0.5s ease-in-out; /* Плавное переключение между изображениями */
+            transition: transform 0.5s ease-in-out;
             width: 100%;
         }
 
@@ -148,10 +162,10 @@
         <!-- Контейнер слайдера -->
         <div class="slider-container">
             <div class="slider">
-                <img src="https://cdn.pixabay.com/photo/2020/01/31/08/38/rolex-4807479_960_720.jpg" alt="Rolex 1">
-                <img src="https://cdn.pixabay.com/photo/2018/03/26/22/17/watch-3264349_960_720.jpg" alt="Rolex 2">
-                <img src="https://cdn.pixabay.com/photo/2018/03/26/19/06/chrome-3263652_1280.jpg" alt="Rolex 3">
-                <img src="https://cdn.pixabay.com/photo/2018/07/02/11/13/rolex-3511356_1280.jpg" alt="Rolex 4">
+                <img src="https://cdn.pixabay.com/photo/2020/01/31/08/38/rolex-4807479_960_720.jpg" alt="Rolex 1" />
+                <img src="https://cdn.pixabay.com/photo/2018/03/26/22/17/watch-3264349_960_720.jpg" alt="Rolex 2" />
+                <img src="https://cdn.pixabay.com/photo/2018/03/26/19/06/chrome-3263652_1280.jpg" alt="Rolex 3" />
+                <img src="https://cdn.pixabay.com/photo/2018/07/02/11/13/rolex-3511356_1280.jpg" alt="Rolex 4" />
             </div>
 
             <!-- Кнопки для переключения слайдов -->
@@ -182,44 +196,34 @@
         const nextButton = document.querySelector('.next');
         const prevButton = document.querySelector('.prev');
 
-        // Функция для перехода к следующему или предыдущему слайду
         function moveSlide(direction) {
-            // Если направление = 1 (следующий слайд), проверяем, не находимся ли мы на последнем слайде
             if (direction === 1 && slideIndex === slides.length - 1) {
-                return; // Если на последнем слайде, не переходим дальше
+                return;
             }
-
-            // Если направление = -1 (предыдущий слайд), проверяем, не находимся ли мы на первом слайде
             if (direction === -1 && slideIndex === 0) {
-                return; // Если на первом слайде, не переходим назад
+                return;
             }
-
-            slideIndex += direction; // Увеличиваем или уменьшаем индекс в зависимости от направления
-
-            updateSlider(); // Обновляем слайдер
+            slideIndex += direction;
+            updateSlider();
         }
 
-        // Обновление позиции слайдера
         function updateSlider() {
-            const newTransformValue = -slideIndex * 100; // Позиция для текущего слайда
+            const newTransformValue = -slideIndex * 100;
             document.querySelector('.slider').style.transform = `translateX(${newTransformValue}%)`;
 
-            // Отключаем кнопку "Следующий", если мы на последнем слайде
             if (slideIndex === slides.length - 1) {
-                nextButton.disabled = true; // Делаем кнопку "Следующий" неактивной
+                nextButton.disabled = true;
             } else {
-                nextButton.disabled = false; // Включаем кнопку "Следующий"
+                nextButton.disabled = false;
             }
 
-            // Отключаем кнопку "Предыдущий", если мы на первом слайде
             if (slideIndex === 0) {
-                prevButton.disabled = true; // Делаем кнопку "Предыдущий" неактивной
+                prevButton.disabled = true;
             } else {
-                prevButton.disabled = false; // Включаем кнопку "Предыдущий"
+                prevButton.disabled = false;
             }
         }
 
-        // Инициализация слайдера
         updateSlider();
     </script>
 

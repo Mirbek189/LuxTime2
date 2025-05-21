@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Личный кабинет — Rolex</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark-green: #0e2f1b;
+      --gold: #d4af37;
+      --text: #f0f0f0;
+      --gray: #999;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: url(' https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: -1;
+    }
+
+    .container {
+      background-color: rgba(18, 18, 18, 0.95);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 1000px;
+      width: 100%;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .tab {
+      padding: 10px 24px;
+      border-radius: 30px;
+      background-color: #1e1e1e;
+      color: var(--gray);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+
+    .tab:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .tab.active {
+      background-color: var(--gold);
+      color: #000;
+      font-weight: 700;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    p {
+      margin-bottom: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #1b1b1b;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px;
+      border-bottom: 1px solid #2c2c2c;
+      text-align: left;
+      color: var(--text);
+    }
+
+    th {
+      background-color: #2e2e2e;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.85rem;
+    }
+
+    tr:hover td {
+      background-color: #2a2a2a;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    li {
+      background-color: #1f1f1f;
+      padding: 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    label {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    input {
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      background: #2e2e2e;
+      color: var(--text);
+    }
+
+    input:focus {
+      outline: 2px solid var(--gold);
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 14px;
+      border: none;
+      border-radius: 30px;
+      background-color: var(--gold);
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e1c160;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #444;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 600px) {
+      .tab {
+        font-size: 0.9rem;
+        padding: 8px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Личный кабинет</h1>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="profile">Личные данные</div>
+      <div class="tab" data-tab="orders">История заказов</div>
+      <div class="tab" data-tab="favorites">Избранное</div>
+      <div class="tab" data-tab="settings">Настройки</div>
+    </div>
+
+    <section id="profile" class="tab-content active">
+      <h2>Личные данные</h2>
+      <p><strong>Имя:</strong> {{ user.first_name }}</p>
+      <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+    </section>
+
+    <section id="orders" class="tab-content">
+      <h2>История заказов</h2>
+      {% if orders %}
+      <table>
+        <thead>
+          <tr><th>№</th><th>Дата</th><th>Статус</th><th>Сумма</th></tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.date|date:"d.m.Y" }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.total_price }} ₽</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p>Нет заказов.</p>
+      {% endif %}
+    </section>
+
+    <section id="favorites" class="tab-content">
+      <h2>Избранное</h2>
+      {% if favorites %}
+      <ul>
+        {% for item in favorites %}
+        <li>{{ item.name }} — {{ item.price }} ₽</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>Избранных товаров нет.</p>
+      {% endif %}
+    </section>
+
+    <section id="settings" class="tab-content">
+      <h2>Настройки профиля</h2>
+      <form method="POST" action="{% url 'account' %}">
+        {% csrf_token %}
+        <label for="first_name">Имя</label>
+        <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}">
+
+        <label for="last_name">Фамилия</label>
+        <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="{{ user.email }}">
+
+        <hr>
+
+        <label for="old_password">Старый пароль</label>
+        <input type="password" id="old_password" name="old_password">
+
+        <label for="new_password1">Новый пароль</label>
+        <input type="password" id="new_password1" name="new_password1">
+
+        <label for="new_password2">Подтвердите новый пароль</label>
+        <input type="password" id="new_password2" name="new_password2">
+
+        <button type="submit">Сохранить</button>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
+
