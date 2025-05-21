@@ -68,7 +68,8 @@ def login_user(request):
 
 # Страница коллекций
 def collections(request):
-    return render(request, 'collections.html')
+    products = Product.objects.all()
+    return render(request, 'collections.html',{"products":products})
 
 #Страница о нас
 def about(request):
