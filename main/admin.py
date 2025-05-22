@@ -1,5 +1,8 @@
 from django.contrib import admin
 from .models import Product, ProductImage, Category
+from django.contrib import admin
+from .models import ContactMessage
+
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
@@ -13,3 +16,12 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
+
+
+
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'created_at')
+    readonly_fields = ('name', 'email', 'message', 'created_at')
+    ordering = ('-created_at',)

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from pyexpat.errors import messages
-
+from .forms import YourContactForm
 from .models import Product
 from .forms import RegisterForm
 def home(request):
@@ -85,3 +85,27 @@ def account(request):
 def checkout_view(request):
     # Тут можно логика оформления заказа
     return render(request, 'checkout.html')
+
+
+
+
+
+from django.shortcuts import render, redirect
+from .forms import ContactForm
+
+from django.shortcuts import render, redirect
+from .forms import ContactForm  # судя по твоему коду, форма называется ContactForm
+
+def contact(request):
+    success = False
+    if request.method == 'POST':
+        form = ContactForm(request.POST)  # поправил название формы
+        if form.is_valid():
+            form.save()  # Сохраняем данные в базу!
+            success = True
+            form = ContactForm()  # очищаем форму после успешной отправки
+    else:
+        form = ContactForm()
+
+    return render(request, 'contact.html', {'form': form, 'success': success})
+
