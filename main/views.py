@@ -79,3 +79,9 @@ def about(request):
 #Страница личный кабинет
 def account(request):
     return render(request, 'account.html')
+
+
+
+def checkout_view(request):
+    # Тут можно логика оформления заказа
+    return render(request, 'checkout.html')
