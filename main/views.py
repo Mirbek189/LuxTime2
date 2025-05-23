@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
-from pyexpat.errors import messages
-from .forms import YourContactForm
-from .models import Product
 from .forms import RegisterForm
+from django.contrib.auth import authenticate, login
+from .forms import ContactForm
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Product, CartItem
+
 def home(request):
     selected_brands = request.GET.getlist('brand')
     min_price = request.GET.get('min_price')
@@ -33,8 +35,6 @@ def home(request):
     return render(request, 'home.html', context)
 
 
-
-
 def registration(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -45,11 +45,6 @@ def registration(request):
         form = RegisterForm()
     return render(request, 'registration.html', {'form': form})
 
-
-
-
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
 
 def login_user(request):
     if request.method == 'POST':
@@ -69,32 +64,23 @@ def login_user(request):
 # Страница коллекций
 def collections(request):
     products = Product.objects.all()
-    return render(request, 'collections.html',{"products":products})
+    return render(request, 'collections.html', {"products": products})
 
-#Страница о нас
+
+# Страница о нас
 def about(request):
     return render(request, 'about.html')
 
 
-#Страница личный кабинет
+# Страница личный кабинет
 def account(request):
     return render(request, 'account.html')
-
 
 
 def checkout_view(request):
     # Тут можно логика оформления заказа
     return render(request, 'checkout.html')
 
-
-
-
-
-from django.shortcuts import render, redirect
-from .forms import ContactForm
-
-from django.shortcuts import render, redirect
-from .forms import ContactForm
 
 def contact(request):
     success = False
@@ -109,3 +95,36 @@ def contact(request):
 
     return render(request, 'contact.html', {'form': form, 'success': success})
 
+
+
+
+
+@login_required
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
+
+    if not created:
+        # Если товар уже в корзине, можно увеличить количество, например:
+        cart_item.quantity += 1
+        cart_item.save()
+
+    return redirect('cart_view')
+
+
+@login_required
+def cart_view(request):
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = sum(item.product.price * item.quantity for item in cart_items)
+
+    return render(request, 'cart.html', {
+        'cart_items': cart_items,
+        'total_price': total_price,
+    })
+
+
+@login_required
+def remove_from_cart(request, cart_item_id):
+    cart_item = get_object_or_404(CartItem, id=cart_item_id, user=request.user)
+    cart_item.delete()
+    return redirect('cart_view')

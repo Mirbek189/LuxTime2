@@ -1,231 +1,138 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Оформление заказа</title>
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      color: #ddd;
-      background-image: url('https://images.unsplash.com/photo-1642538895365-da5dcbfcdf6f?q=80&w=2105&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      overflow-x: hidden;
-      min-height: 100vh;
-      position: relative;
-      z-index: 1;
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #1d1a16;
+      color: #fffbe7;
     }
-
-    .checkout-title {
-      text-align: center;
-      font-size: 34px;
-      margin: 50px 0 40px;
-      font-weight: 600;
-      color: #f5f5f5;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
-    }
-
     .checkout-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #2c1e13;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #fceabb;
+    }
+    .order-summary {
+      margin-bottom: 30px;
+    }
+    .order-item {
       display: flex;
       justify-content: space-between;
-      max-width: 1100px;
-      margin: 0 auto 60px auto;
-      padding: 20px;
-      gap: 50px;
+      padding: 8px 0;
+      border-bottom: 1px solid #a47148;
     }
-
-    .order-summary {
-      flex: 1;
-      background-color: rgba(0, 0, 0, 0.8);
-      padding: 30px 25px;
-      border-radius: 12px;
-      border: 1px solid #333;
-      color: #ccc;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+    .order-item:last-child {
+      border-bottom: none;
     }
-
-    .product-image {
-      max-width: 100%;
-      max-height: 220px;
-      object-fit: contain;
-      margin-bottom: 25px;
-      border-radius: 8px;
-      background-color: #222;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
-    }
-
-    .product-name {
-      font-size: 26px;
-      margin-bottom: 10px;
-      font-weight: 700;
-      color: #eee;
-    }
-
-    .product-price {
-      font-size: 22px;
-      color: #7ec04d;
-      font-weight: 600;
-      margin-bottom: 15px;
-    }
-
-    .product-description {
-      font-size: 16px;
-      line-height: 1.4;
-      color: #aaa;
-      margin-top: 10px;
-    }
-
-    .checkout-form {
-      flex: 2;
-      background-color: rgba(0, 0, 0, 0.8);
-      padding: 35px 30px;
-      border-radius: 12px;
-      border: 1px solid #333;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-    }
-
-    .checkout-form h4 {
-      margin-bottom: 30px;
-      font-weight: 600;
-      font-size: 24px;
-      color: #f5f5f5;
-      letter-spacing: 1px;
-    }
-
-    .form-group {
-      margin-bottom: 25px;
-    }
-
-    .form-group label {
+    label {
       display: block;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #bbb;
+      margin-bottom: 10px;
+      font-weight: bold;
     }
-
-    .form-input {
+    input, textarea {
       width: 100%;
-      padding: 14px 16px;
-      border-radius: 10px;
-      border: 1px solid #444;
-      font-size: 17px;
-      color: #111;
-      background-color: #eee;
-    }
-
-    .form-input:focus {
-      outline: none;
-      border-color: #7ec04d;
-      box-shadow: 0 0 8px rgba(126, 192, 77, 0.7);
-    }
-
-    textarea.form-input {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 16px 0;
-      background: linear-gradient(45deg, #7ec04d, #4a6e21);
-      color: #fff;
-      font-size: 20px;
-      font-weight: 700;
+      padding: 10px;
+      border-radius: 6px;
       border: none;
-      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #a47148;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      transition: background 0.3s ease;
-      box-shadow: 0 4px 15px rgba(126, 192, 77, 0.6);
+      width: 100%;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
     }
-
-    .submit-btn:hover {
-      background: linear-gradient(45deg, #4a6e21, #2f4213);
-    }
-
-    .success-message {
-      display: none;
-      padding: 25px;
-      background-color: #7ec04d;
-      color: #111;
-      border-radius: 12px;
-      margin-top: 25px;
-      text-align: center;
-      font-size: 20px;
-      font-weight: 600;
-    }
-
-    @media(max-width: 900px) {
-      .checkout-container {
-        flex-direction: column;
-        max-width: 90vw;
-        gap: 30px;
-      }
-      .checkout-form, .order-summary {
-        max-width: 100%;
-      }
+    button:hover {
+      background-color: #c88b5e;
     }
   </style>
 </head>
 <body>
 
-<h2 class="checkout-title">Оформление заказа</h2>
-
 <div class="checkout-container">
-  <div class="order-summary">
-    <img
-      class="product-image"
-      src="{{ request.GET.product_image_url|default:'https://via.placeholder.com/300x220?text=No+Image' }}"
-      alt="Фото товара"
-    />
-    <h3 class="product-name">{{ request.GET.product_name|default:"Название товара" }}</h3>
-    <p class="product-price">Цена: <span>{{ request.GET.product_price|default:"-" }} ₽</span></p>
-    <p class="product-description">{{ request.GET.product_description|default:"Описание товара отсутствует." }}</p>
+  <h1>Оформление заказа</h1>
+
+  <div class="order-summary" id="order-summary">
+    <h2>Ваш заказ:</h2>
+    <!-- Здесь JS вставит список товаров и итоговую сумму -->
   </div>
 
-  <div class="checkout-form">
-    <h4>Введите данные для оформления</h4>
-    <form method="POST" id="order-form">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="name">Имя</label>
-        <input type="text" name="name" id="name" class="form-input" required />
-      </div>
-      <div class="form-group">
-        <label for="phone">Телефон</label>
-        <input type="tel" name="phone" id="phone" class="form-input" required />
-      </div>
-      <div class="form-group">
-        <label for="address">Адрес доставки</label>
-        <textarea name="address" id="address" class="form-input" required></textarea>
-      </div>
-      <button type="submit" class="submit-btn">Подтвердить заказ</button>
-    </form>
-  </div>
-</div>
+  <form id="order-form">
+    <label for="name">Ваше имя</label>
+    <input type="text" id="name" required />
 
-<div id="success-message" class="success-message">
-  <p>Спасибо за заказ! Мы скоро с вами свяжемся.</p>
+    <label for="email">Email</label>
+    <input type="email" id="email" required />
+
+    <label for="address">Адрес доставки</label>
+    <textarea id="address" rows="4" required></textarea>
+
+    <button type="submit">Подтвердить заказ</button>
+  </form>
 </div>
 
 <script>
-  document.getElementById('order-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    setTimeout(function() {
-      document.getElementById('order-form').style.display = 'none';
-      document.getElementById('success-message').style.display = 'block';
-    }, 1000);
+  document.addEventListener('DOMContentLoaded', () => {
+    const orderSummaryEl = document.getElementById('order-summary');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    if (cart.length === 0) {
+      orderSummaryEl.innerHTML += '<p>Корзина пуста.</p>';
+    } else {
+      let total = 0;
+      const list = document.createElement('div');
+      cart.forEach(item => {
+        const price = parseFloat(item.price.toString().replace(/[^\d.]/g, '')) || 0;
+        total += price;
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'order-item';
+        itemDiv.innerHTML = `<span>${item.name}</span><span>${price.toFixed(2)} ₽</span>`;
+        list.appendChild(itemDiv);
+      });
+      orderSummaryEl.appendChild(list);
+
+      const totalDiv = document.createElement('div');
+      totalDiv.style.textAlign = 'right';
+      totalDiv.style.marginTop = '10px';
+      totalDiv.style.fontWeight = 'bold';
+      totalDiv.textContent = `Итог: ${total.toFixed(2)} ₽`;
+      orderSummaryEl.appendChild(totalDiv);
+    }
+
+    // Обработка отправки формы
+    document.getElementById('order-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      alert('Спасибо за заказ! Мы с вами свяжемся.');
+
+      // Очистить корзину после оформления
+      localStorage.removeItem('cart');
+
+      // Можно сделать редирект, например, на главную страницу
+      window.location.href = "{% url 'home' %}";
+    });
   });
 </script>
 
 </body>
 </html>
+

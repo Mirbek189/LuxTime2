@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Корзина</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: Arial, sans-serif;
+      color: #fffbe7;
+      background-image: url('https://images.pexels.com/photos/4276458/pexels-photo-4276458.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .cart-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(44, 30, 19, 0.85);
+      border-radius: 14px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #fceabb;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #a47148;
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .cart-item span {
+      flex: 1;
+    }
+
+    .delete-btn {
+      background-color: #c94f4f;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+      margin-left: 10px;
+    }
+
+    .delete-btn:hover {
+      background-color: #ff6565;
+    }
+
+    .cart-total {
+      margin-top: 30px;
+      text-align: right;
+      font-size: 20px;
+      font-weight: bold;
+      color: #fceabb;
+    }
+
+    .buttons-container {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px;
+      background-color: #a47148;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      border: none;
+      font-size: 16px;
+    }
+
+    .btn:hover {
+      background-color: #c88b5e;
+    }
+
+    .back-link {
+      flex: 1;
+      display: inline-block;
+      text-align: center;
+      line-height: 38px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="cart-container">
+  <h1>Ваша корзина</h1>
+  <div id="cart-items"></div>
+  <div class="cart-total">Итог: <span id="total-price">0</span> ₽</div>
+
+  <div class="buttons-container">
+    <a href="{% url 'home' %}" class="btn back-link">← Вернуться к товарам</a>
+<!-- В кнопке оформленя убираем переход с параметрами -->
+<button id="checkout-btn" class="btn">Оформить заказ</button>
+
+<script>
+  document.getElementById('checkout-btn').addEventListener('click', () => {
+    // Просто переходим на страницу оформления заказа
+    window.location.href = "{% url 'checkout' %}";
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    function renderCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const container = document.getElementById('cart-items');
+      const totalPriceEl = document.getElementById('total-price');
+      container.innerHTML = '';
+      let total = 0;
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p>Корзина пуста.</p>';
+        totalPriceEl.textContent = '0.00';
+        document.getElementById('checkout-btn').disabled = true;
+        return;
+      }
+
+      document.getElementById('checkout-btn').disabled = false;
+
+      cart.forEach((item, index) => {
+        const name = item.name || 'Неизвестно';
+        const rawPrice = item.price || '0';
+        const numericPrice = parseFloat(rawPrice.toString().replace(/[^\d.]/g, ''));
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+
+        div.innerHTML = `
+          <span>${name}</span>
+          <span>${isNaN(numericPrice) ? '0.00' : numericPrice.toFixed(2)} ₽</span>
+          <button class="delete-btn" data-index="${index}">Удалить</button>
+        `;
+
+        container.appendChild(div);
+
+        total += isNaN(numericPrice) ? 0 : numericPrice;
+      });
+
+      totalPriceEl.textContent = total.toFixed(2);
+
+      // Добавляем обработчики кнопкам удаления
+      const deleteButtons = container.querySelectorAll('.delete-btn');
+      deleteButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = e.target.getAttribute('data-index');
+          removeFromCart(idx);
+        });
+      });
+    }
+
+    function removeFromCart(index) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    document.getElementById('checkout-btn').addEventListener('click', () => {
+      // Переход на страницу оформления заказа
+      window.location.href = "{% url 'checkout' %}";
+    });
+
+    renderCart();
+  });
+</script>
+
+  </body>
+</html>
+
+
