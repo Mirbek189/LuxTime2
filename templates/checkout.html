@@ -2,219 +2,181 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Оформление заказа</title>
-<style>
-  /* Фоновое видео на весь экран */
-  #background-video {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    z-index: -2;
-    filter: brightness(0.3) contrast(0.85);
-  }
-  /* Затемняющий оверлей поверх видео */
-  #overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(5,10,25,0.85);
-    z-index: -1;
-  }
-  /* Базовые стили */
-  body, html {
-    margin: 0; padding: 0;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #f0f0f0;
-    background-color: #050a19;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Оформление заказа</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #ddd;
+      background-image: url('https://images.unsplash.com/photo-1642538895365-da5dcbfcdf6f?q=80&w=2105&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
 
-  .checkout-title {
-    text-align: center;
-    font-size: 34px;
-    margin: 50px 0 40px;
-    font-weight: 600;
-    color: #a5c8ff;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
-    position: relative;
-    z-index: 1;
-  }
+    .checkout-title {
+      text-align: center;
+      font-size: 34px;
+      margin: 50px 0 40px;
+      font-weight: 600;
+      color: #f5f5f5;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+    }
 
-  .checkout-container {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1100px;
-    margin: 0 auto 60px auto;
-    padding: 20px;
-    gap: 50px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .order-summary {
-    flex: 1;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 30px 25px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    color: #e0e0e0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .product-image {
-    max-width: 100%;
-    max-height: 220px;
-    object-fit: contain;
-    margin-bottom: 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
-    background-color: rgba(255,255,255,0.05);
-  }
-
-  .product-name {
-    font-size: 26px;
-    margin-bottom: 10px;
-    font-weight: 700;
-    color: #a5c8ff;
-    letter-spacing: 1px;
-  }
-
-  .product-price {
-    font-size: 22px;
-    color: #7ec04d;
-    font-weight: 600;
-    margin-bottom: 15px;
-  }
-
-  .product-description {
-    font-size: 16px;
-    line-height: 1.4;
-    color: #cfd9ff;
-    margin-top: 10px;
-    padding: 0 10px;
-  }
-
-  .checkout-form {
-    flex: 2;
-    background-color: rgba(255, 255, 255, 0.12);
-    padding: 35px 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-    max-width: 520px;
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    color: #f0f0f0;
-  }
-
-  .checkout-form h4 {
-    margin-bottom: 30px;
-    font-weight: 600;
-    font-size: 24px;
-    color: #a5c8ff;
-    letter-spacing: 1px;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-  }
-
-  .form-group {
-    margin-bottom: 25px;
-  }
-
-  .form-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #dcdcdc;
-    letter-spacing: 0.5px;
-  }
-
-  .form-input {
-    width: 100%;
-    padding: 14px 16px;
-    border-radius: 10px;
-    border: 1.8px solid rgba(255,255,255,0.3);
-    font-size: 17px;
-    color: #222;
-    background-color: rgba(255, 255, 255, 0.9);
-  }
-
-  .form-input:focus {
-    outline: none;
-    border-color: #7ec04d;
-    box-shadow: 0 0 8px rgba(126, 192, 77, 0.7);
-  }
-
-  textarea.form-input {
-    resize: vertical;
-    min-height: 80px;
-  }
-
-  .submit-btn {
-    width: 100%;
-    padding: 16px 0;
-    background: linear-gradient(45deg, #7ec04d, #4a6e21);
-    color: #f5f5f5;
-    font-size: 20px;
-    font-weight: 700;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    transition: background 0.3s ease;
-    box-shadow: 0 4px 15px rgba(126, 192, 77, 0.7);
-  }
-
-  .submit-btn:hover {
-    background: linear-gradient(45deg, #4a6e21, #2f4213);
-    box-shadow: 0 6px 20px rgba(74, 110, 33, 0.9);
-  }
-
-  .success-message {
-    display: none;
-    padding: 25px;
-    background-color: #7ec04d;
-    color: #0b3d91;
-    border-radius: 12px;
-    margin-top: 25px;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    box-shadow: 0 6px 18px rgba(126, 192, 77, 0.9);
-    position: relative;
-    z-index: 1;
-  }
-
-  @media(max-width: 900px) {
     .checkout-container {
-      flex-direction: column;
-      max-width: 90vw;
-      gap: 30px;
+      display: flex;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto 60px auto;
+      padding: 20px;
+      gap: 50px;
     }
-    .checkout-form, .order-summary {
+
+    .order-summary {
+      flex: 1;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 30px 25px;
+      border-radius: 12px;
+      border: 1px solid #333;
+      color: #ccc;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+    }
+
+    .product-image {
       max-width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      background-color: #222;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
     }
-  }
-</style>
+
+    .product-name {
+      font-size: 26px;
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: #eee;
+    }
+
+    .product-price {
+      font-size: 22px;
+      color: #7ec04d;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .product-description {
+      font-size: 16px;
+      line-height: 1.4;
+      color: #aaa;
+      margin-top: 10px;
+    }
+
+    .checkout-form {
+      flex: 2;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 35px 30px;
+      border-radius: 12px;
+      border: 1px solid #333;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .checkout-form h4 {
+      margin-bottom: 30px;
+      font-weight: 600;
+      font-size: 24px;
+      color: #f5f5f5;
+      letter-spacing: 1px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #bbb;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid #444;
+      font-size: 17px;
+      color: #111;
+      background-color: #eee;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #7ec04d;
+      box-shadow: 0 0 8px rgba(126, 192, 77, 0.7);
+    }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px 0;
+      background: linear-gradient(45deg, #7ec04d, #4a6e21);
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: background 0.3s ease;
+      box-shadow: 0 4px 15px rgba(126, 192, 77, 0.6);
+    }
+
+    .submit-btn:hover {
+      background: linear-gradient(45deg, #4a6e21, #2f4213);
+    }
+
+    .success-message {
+      display: none;
+      padding: 25px;
+      background-color: #7ec04d;
+      color: #111;
+      border-radius: 12px;
+      margin-top: 25px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    @media(max-width: 900px) {
+      .checkout-container {
+        flex-direction: column;
+        max-width: 90vw;
+        gap: 30px;
+      }
+      .checkout-form, .order-summary {
+        max-width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<!-- Фоновое видео из статики Django -->
-<video autoplay muted loop id="background-video">
-  <source src="{% static 'background.mp4' %}" type="video/mp4" />
-  Ваш браузер не поддерживает видео.
-</video>
-<div id="overlay"></div>
 
 <h2 class="checkout-title">Оформление заказа</h2>
 

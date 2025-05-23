@@ -94,16 +94,16 @@ from django.shortcuts import render, redirect
 from .forms import ContactForm
 
 from django.shortcuts import render, redirect
-from .forms import ContactForm  # судя по твоему коду, форма называется ContactForm
+from .forms import ContactForm
 
 def contact(request):
     success = False
     if request.method == 'POST':
-        form = ContactForm(request.POST)  # поправил название формы
+        form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()  # Сохраняем данные в базу!
+            form.save()
             success = True
-            form = ContactForm()  # очищаем форму после успешной отправки
+            form = ContactForm()
     else:
         form = ContactForm()
 
