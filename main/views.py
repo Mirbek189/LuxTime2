@@ -1,9 +1,10 @@
 from .forms import RegisterForm
 from django.contrib.auth import authenticate, login
 from .forms import ContactForm
-from django.contrib.auth.decorators import login_required
 from .models import Product, CartItem
 from django.shortcuts import redirect, get_object_or_404
+from django.http import JsonResponse, Http404
+from django.views.decorators.http import require_POST
 
 
 def home(request):
@@ -158,6 +159,14 @@ def account_view(request):
     return render(request, 'collections.html', {
         'user': request.user,
         'favorites': favorites,
-        # другие данные — заказы и т.д.
     })
 
+@login_required
+@require_POST
+def delete_favorite(request, id):
+    try:
+        favorite = Favorite.objects.get(id=id, user=request.user)
+        favorite.delete()
+    except Favorite.DoesNotExist:
+        raise Http404("Избранный товар не найден.")
+    return redirect('account')  # или на тот url, где твой личный кабинет

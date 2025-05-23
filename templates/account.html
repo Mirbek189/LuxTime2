@@ -147,6 +147,24 @@
       border-radius: 10px;
       font-weight: 600;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .remove-favorite {
+      background-color: var(--gold);
+      border: none;
+      border-radius: 6px;
+      color: #000;
+      font-weight: 700;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .remove-favorite:hover {
+      background-color: #e1c160;
     }
 
     form {
@@ -247,17 +265,24 @@
     </section>
 
     <section id="favorites" class="tab-content">
-      <h2>Избранное</h2>
-      {% if favorites %}
-      <ul>
-        {% for item in favorites %}
-        <li>{{ item.item.name }} — {{ item.item.price }} ₽</li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p>Избранных товаров нет.</p>
-      {% endif %}
-    </section>
+  <h2>Избранное</h2>
+  {% if favorites %}
+  <ul>
+    {% for item in favorites %}
+    <li>
+      {{ item.item.name }} — {{ item.item.price }} ₽
+      <form method="POST" action="{% url 'delete_favorite' item.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>Избранных товаров нет.</p>
+  {% endif %}
+</section>
+
 
     <section id="settings" class="tab-content">
       <h2>Настройки профиля</h2>
@@ -302,6 +327,10 @@
       });
     });
   </script>
+
+
+
 </body>
 </html>
+
 

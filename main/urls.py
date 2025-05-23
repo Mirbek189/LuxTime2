@@ -13,5 +13,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('cart/', views.cart_view, name='cart'),
     path('favorites/add/<int:product_id>/', views.add_to_favorites, name='add_to_favorites'),
+    path('favorites/delete/<int:id>/', views.delete_favorite, name='delete_favorite'),
+
 ]
 
