@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductImage, Category
+from .models import Product, ProductImage, Category,Favorite
 from django.contrib import admin
 from .models import ContactMessage
 
@@ -16,6 +16,8 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
+
+admin.site.register(Favorite)
 
 
 

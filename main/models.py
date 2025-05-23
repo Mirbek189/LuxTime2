@@ -46,7 +46,7 @@ class CartItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
-        unique_together = ('user', 'product')  # чтобы у пользователя не было дублирующихся товаров
+        unique_together = ('user', 'product')
 
     def __str__(self):
         return f"{self.quantity} x {self.product.name} для {self.user.username}"
@@ -55,3 +55,13 @@ class CartItem(models.Model):
     def total_price(self):
         return self.product.price * self.quantity
 
+
+
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    item = models.ForeignKey('main.Product', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'item')

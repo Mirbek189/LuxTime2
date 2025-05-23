@@ -251,7 +251,7 @@
       {% if favorites %}
       <ul>
         {% for item in favorites %}
-        <li>{{ item.name }} — {{ item.price }} ₽</li>
+        <li>{{ item.item.name }} — {{ item.item.price }} ₽</li>
         {% endfor %}
       </ul>
       {% else %}

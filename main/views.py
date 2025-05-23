@@ -1,9 +1,10 @@
 from .forms import RegisterForm
 from django.contrib.auth import authenticate, login
 from .forms import ContactForm
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Product, CartItem
+from django.shortcuts import redirect, get_object_or_404
+
 
 def home(request):
     selected_brands = request.GET.getlist('brand')
@@ -73,8 +74,16 @@ def about(request):
 
 
 # Страница личный кабинет
+from django.contrib.auth.decorators import login_required
+from .models import Favorite
+
+@login_required
 def account(request):
-    return render(request, 'account.html')
+    favorites = Favorite.objects.filter(user=request.user).select_related('item')
+    return render(request, 'account.html', {
+        'favorites': favorites,
+        'user': request.user,
+    })
 
 
 def checkout_view(request):
@@ -105,7 +114,6 @@ def add_to_cart(request, product_id):
     cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
 
     if not created:
-        # Если товар уже в корзине, можно увеличить количество, например:
         cart_item.quantity += 1
         cart_item.save()
 
@@ -128,3 +136,28 @@ def remove_from_cart(request, cart_item_id):
     cart_item = get_object_or_404(CartItem, id=cart_item_id, user=request.user)
     cart_item.delete()
     return redirect('cart_view')
+
+
+# views.py
+
+
+
+
+@login_required
+def add_to_favorites(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    Favorite.objects.get_or_create(user=request.user, item=product)
+    return redirect('account')
+
+# views.py
+from django.shortcuts import render
+from .models import Favorite
+
+def account_view(request):
+    favorites = Favorite.objects.filter(user=request.user).select_related('item')
+    return render(request, 'collections.html', {
+        'user': request.user,
+        'favorites': favorites,
+        # другие данные — заказы и т.д.
+    })
+

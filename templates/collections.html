@@ -148,7 +148,11 @@
              data-price="{{ product.price }}">
              В корзину
           </button>
-          <a href="{% url 'home' %}?favorite=true&product_id={{ product.id }}">В избранное</a>
+          <form method="POST" action="{% url 'add_to_favorites' product.id %}">
+  {% csrf_token %}
+  <button type="submit">Добавить в избранное</button>
+</form>
+
         </div>
       </div>
     </div>
