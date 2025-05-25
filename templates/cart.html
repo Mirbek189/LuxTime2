@@ -10,11 +10,17 @@
       padding: 40px;
       font-family: Arial, sans-serif;
       color: #fffbe7;
-      background-image: url('https://images.pexels.com/photos/4276458/pexels-photo-4276458.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+      background-color: #000; /* на случай если видео не загрузится */
+    }
+
+    #bg-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100vw;
+      min-height: 100vh;
+      z-index: -1;
+      object-fit: cover;
     }
 
     .cart-container {
@@ -109,6 +115,10 @@
 </head>
 <body>
 
+<video autoplay muted loop playsinline id="bg-video">
+  <source src="{% static 'background.mp4' %}" type="video/mp4">
+</video>
+
 <div class="cart-container">
   <h1>Ваша корзина</h1>
   <div id="cart-items"></div>
@@ -116,15 +126,9 @@
 
   <div class="buttons-container">
     <a href="{% url 'home' %}" class="btn back-link">← Вернуться к товарам</a>
-<!-- В кнопке оформленя убираем переход с параметрами -->
-<button id="checkout-btn" class="btn">Оформить заказ</button>
-
-<script>
-  document.getElementById('checkout-btn').addEventListener('click', () => {
-    // Просто переходим на страницу оформления заказа
-    window.location.href = "{% url 'checkout' %}";
-  });
-</script>
+    <button id="checkout-btn" class="btn">Оформить заказ</button>
+  </div>
+</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -165,7 +169,6 @@
 
       totalPriceEl.textContent = total.toFixed(2);
 
-      // Добавляем обработчики кнопкам удаления
       const deleteButtons = container.querySelectorAll('.delete-btn');
       deleteButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -183,7 +186,6 @@
     }
 
     document.getElementById('checkout-btn').addEventListener('click', () => {
-      // Переход на страницу оформления заказа
       window.location.href = "{% url 'checkout' %}";
     });
 
