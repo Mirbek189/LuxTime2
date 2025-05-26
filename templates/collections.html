@@ -6,7 +6,6 @@
 </video>
 
 <style>
-  /* твои стили (оставил без изменений) */
   #background-video {
     position: fixed;
     top: 0;
@@ -16,6 +15,7 @@
     object-fit: cover;
     z-index: -1;
   }
+
   .card-container {
     position: relative;
     z-index: 1;
@@ -27,6 +27,7 @@
     flex-direction: column;
     align-items: center;
   }
+
   .card {
     display: none;
     width: 100%;
@@ -38,26 +39,32 @@
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     animation: fadeIn 0.5s ease-in-out;
   }
+
   .card.active {
     display: flex;
   }
+
   .card:hover {
     transform: scale(1.02);
     box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6);
   }
+
   @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
   }
+
   .card img {
     width: 50%;
     object-fit: cover;
     transition: transform 0.5s ease, filter 0.5s ease;
   }
+
   .card img:hover {
     transform: scale(1.05);
     filter: brightness(0.9);
   }
+
   .card-content {
     padding: 24px;
     width: 50%;
@@ -66,29 +73,35 @@
     justify-content: center;
     text-align: left;
   }
+
   .card-content h2 {
     font-size: 26px;
     margin-bottom: 8px;
     color: #fceabb;
   }
+
   .card-content .brand {
     font-size: 15px;
     color: #d4b28c;
     margin-bottom: 10px;
   }
+
   .card-content .description {
     font-size: 14px;
     color: #e6ddc6;
     margin-bottom: 16px;
     line-height: 1.5;
   }
+
   .card-content .price {
     font-size: 20px;
     font-weight: bold;
     color: #fffbe7;
     margin-bottom: 18px;
   }
-  .card-content .actions button, .card-content .actions a {
+
+  .card-content .actions button,
+  .card-content .actions a {
     display: inline-block;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -102,27 +115,38 @@
     transition: background-color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
   }
-  .card-content .actions button:hover, .card-content .actions a:hover {
+
+  .card-content .actions button:hover,
+  .card-content .actions a:hover {
     background-color: #c88b5e;
     transform: translateY(-2px);
   }
+
   .navigation-buttons {
     display: flex;
     justify-content: center;
     gap: 20px;
     margin-top: 30px;
+    flex-wrap: wrap;
   }
-  .navigation-buttons button {
+
+  .navigation-buttons button,
+  .navigation-buttons .cart-button,
+  .navigation-buttons .home-button {
     background-color: #a47148;
     color: #fff;
-    border: none;
     padding: 12px 24px;
     border-radius: 8px;
-    cursor: pointer;
+    text-decoration: none;
     font-size: 14px;
+    border: none;
+    cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
   }
-  .navigation-buttons button:hover {
+
+  .navigation-buttons button:hover,
+  .navigation-buttons .cart-button:hover,
+  .navigation-buttons .home-button:hover {
     background-color: #c88b5e;
     transform: scale(1.05);
   }
@@ -143,16 +167,15 @@
         <p class="price">{{ product.price }} ₽</p>
         <div class="actions">
           <button class="add-to-cart"
-             data-id="{{ product.id }}"
-             data-name="{{ product.name }}"
-             data-price="{{ product.price }}">
-             В корзину
+                  data-id="{{ product.id }}"
+                  data-name="{{ product.name }}"
+                  data-price="{{ product.price }}">
+            В корзину
           </button>
           <form method="POST" action="{% url 'add_to_favorites' product.id %}">
-  {% csrf_token %}
-  <button type="submit">Добавить в избранное</button>
-</form>
-
+            {% csrf_token %}
+            <button type="submit">Добавить в избранное</button>
+          </form>
         </div>
       </div>
     </div>
@@ -161,6 +184,8 @@
   <div class="navigation-buttons">
     <button onclick="navigateCard(-1)">Предыдущая</button>
     <button onclick="navigateCard(1)">Следующая</button>
+    <a href="{% url 'cart' %}" class="cart-button">Корзина</a>
+    <a href="{% url 'home' %}" class="home-button">Главная</a>
   </div>
 </div>
 
@@ -180,7 +205,6 @@
 
     window.navigateCard = navigateCard;
 
-    // Создаем блок уведомления в документе, если его нет
     let notification = document.getElementById('notification');
     if (!notification) {
       notification = document.createElement('div');
@@ -220,8 +244,7 @@
         const price = button.dataset.price;
 
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        cart.push({id, name, price});
+        cart.push({ id, name, price });
         localStorage.setItem('cart', JSON.stringify(cart));
 
         showNotification(`Товар "${name}" добавлен в корзину!`);
@@ -229,6 +252,8 @@
     });
   });
 </script>
+
+
 
 
 
