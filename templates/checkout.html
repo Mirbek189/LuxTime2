@@ -1,45 +1,67 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <title>Оформление заказа</title>
   <style>
+    /* Видео на заднем плане */
+    #background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      pointer-events: none;
+    }
+
     body {
       font-family: Arial, sans-serif;
       padding: 40px;
-      background: #1d1a16;
+      margin: 0;
       color: #fffbe7;
     }
+
     .checkout-container {
       max-width: 600px;
       margin: 0 auto;
-      background: #2c1e13;
+      background: rgba(44, 30, 19, 0.85); /* затемнение для читаемости */
       padding: 30px;
       border-radius: 14px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      z-index: 1;
+      position: relative;
     }
+
     h1 {
       text-align: center;
       margin-bottom: 30px;
       color: #fceabb;
     }
+
     .order-summary {
       margin-bottom: 30px;
     }
+
     .order-item {
       display: flex;
       justify-content: space-between;
       padding: 8px 0;
       border-bottom: 1px solid #a47148;
     }
+
     .order-item:last-child {
       border-bottom: none;
     }
+
     label {
       display: block;
       margin-bottom: 10px;
       font-weight: bold;
     }
+
     input, textarea {
       width: 100%;
       padding: 10px;
@@ -48,6 +70,7 @@
       margin-bottom: 20px;
       font-size: 16px;
     }
+
     button {
       background-color: #a47148;
       color: white;
@@ -60,6 +83,7 @@
       font-weight: bold;
       transition: background-color 0.3s ease;
     }
+
     button:hover {
       background-color: #c88b5e;
     }
@@ -67,12 +91,18 @@
 </head>
 <body>
 
+<!-- Видео-фон -->
+<video autoplay muted loop id="background-video">
+  <source src="{% static 'Background2.mp4' %}" type="video/mp4">
+  Ваш браузер не поддерживает видеофон.
+</video>
+
 <div class="checkout-container">
   <h1>Оформление заказа</h1>
 
   <div class="order-summary" id="order-summary">
     <h2>Ваш заказ:</h2>
-    <!-- Здесь JS вставит список товаров и итоговую сумму -->
+    <!-- JS добавит содержимое -->
   </div>
 
   <form id="order-form">
@@ -121,13 +151,8 @@
     // Обработка отправки формы
     document.getElementById('order-form').addEventListener('submit', (e) => {
       e.preventDefault();
-
       alert('Спасибо за заказ! Мы с вами свяжемся.');
-
-      // Очистить корзину после оформления
       localStorage.removeItem('cart');
-
-      // Можно сделать редирект, например, на главную страницу
       window.location.href = "{% url 'home' %}";
     });
   });
@@ -135,4 +160,5 @@
 
 </body>
 </html>
+
 

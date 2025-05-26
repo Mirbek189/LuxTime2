@@ -169,4 +169,4 @@ def delete_favorite(request, id):
         favorite.delete()
     except Favorite.DoesNotExist:
         raise Http404("Избранный товар не найден.")
-    return redirect('account')  # или на тот url, где твой личный кабинет
+    return redirect('account')
