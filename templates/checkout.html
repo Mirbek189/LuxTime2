@@ -5,7 +5,6 @@
   <meta charset="UTF-8" />
   <title>Оформление заказа</title>
   <style>
-    /* Видео на заднем плане */
     #background-video {
       position: fixed;
       top: 0;
@@ -27,7 +26,7 @@
     .checkout-container {
       max-width: 600px;
       margin: 0 auto;
-      background: rgba(44, 30, 19, 0.85); /* затемнение для читаемости */
+      background: rgba(44, 30, 19, 0.85);
       padding: 30px;
       border-radius: 14px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.5);
@@ -91,7 +90,6 @@
 </head>
 <body>
 
-<!-- Видео-фон -->
 <video autoplay muted loop id="background-video">
   <source src="{% static 'Background2.mp4' %}" type="video/mp4">
   Ваш браузер не поддерживает видеофон.
@@ -102,7 +100,6 @@
 
   <div class="order-summary" id="order-summary">
     <h2>Ваш заказ:</h2>
-    <!-- JS добавит содержимое -->
   </div>
 
   <form id="order-form">
@@ -148,12 +145,37 @@
       orderSummaryEl.appendChild(totalDiv);
     }
 
-    // Обработка отправки формы
     document.getElementById('order-form').addEventListener('submit', (e) => {
       e.preventDefault();
-      alert('Спасибо за заказ! Мы с вами свяжемся.');
-      localStorage.removeItem('cart');
-      window.location.href = "{% url 'home' %}";
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const address = document.getElementById('address').value;
+
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      fetch('/submit-order/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, address, cart })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Сервер вернул ошибку');
+        }
+        return response.json();
+      })
+      .then(data => {
+        alert(data.message);
+        localStorage.removeItem('cart');
+        window.location.href = "{% url 'home' %}";
+      })
+      .catch(error => {
+        console.error('Ошибка:', error);
+        alert('Произошла ошибка при отправке заказа.');
+      });
     });
   });
 </script>
