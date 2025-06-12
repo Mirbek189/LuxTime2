@@ -154,7 +154,7 @@
 
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-      fetch('/submit-order/', {
+      fetch('{% url 'submit_order' %}', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
