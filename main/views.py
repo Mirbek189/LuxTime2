@@ -9,7 +9,7 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Order, OrderItem
-
+from django.shortcuts import render
 
 
 
@@ -219,3 +219,10 @@ def submit_order(request):
             return JsonResponse({'message': f'Ошибка: {str(e)}'}, status=400)
 
     return JsonResponse({'message': 'Метод не поддерживается'}, status=405)
+
+
+
+
+
+def blocked_view(request):
+    return render(request, 'blocked.html')

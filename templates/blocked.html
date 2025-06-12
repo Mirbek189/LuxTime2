@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Аккаунт заблокирован</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            letter-spacing: 1.2px;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        a {
+            display: inline-block;
+            padding: 12px 28px;
+            font-weight: 600;
+            color: #764ba2;
+            background: #fff;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        a:hover {
+            background: #5a3e85;
+            color: #fff;
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Ваш аккаунт заблокирован</h2>
+        <p>Обратитесь к администрации для разблокировки
+            либо же создайте новый аккаунт.</p>
+        <a href="{% url 'login_user' %}">Выйти</a>
+    </div>
+</body>
+</html>

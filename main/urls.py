@@ -16,5 +16,6 @@ urlpatterns = [
     path('favorites/add/<int:product_id>/', views.add_to_favorites, name='add_to_favorites'),
     path('favorites/delete/<int:id>/', views.delete_favorite, name='delete_favorite'),
     path('submit-order/', views.submit_order, name='submit_order'),
+    path('blocked/', views.blocked_view, name='blocked'),
 ]
 

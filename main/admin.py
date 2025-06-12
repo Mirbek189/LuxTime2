@@ -2,6 +2,9 @@ from django.contrib import admin
 from .models import Product, ProductImage, Category,Favorite
 from django.contrib import admin
 from .models import ContactMessage, Order, OrderItem
+from django.contrib import admin
+from .models import UserProfile
+
 
 
 class ProductImageInline(admin.TabularInline):
@@ -38,3 +41,11 @@ class OrderItemInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'email', 'created_at')
     inlines = [OrderItemInline]
+
+
+
+
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'is_moderator', 'is_blocked')
+
+admin.site.register(UserProfile, UserProfileAdmin)
