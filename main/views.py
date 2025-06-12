@@ -5,6 +5,12 @@ from .models import Product, CartItem
 from django.shortcuts import redirect, get_object_or_404
 from django.http import JsonResponse, Http404
 from django.views.decorators.http import require_POST
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import Order, OrderItem
+
+
 
 
 def home(request):
@@ -170,3 +176,46 @@ def delete_favorite(request, id):
     except Favorite.DoesNotExist:
         raise Http404("Избранный товар не найден.")
     return redirect('account')
+
+
+
+
+
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from decimal import Decimal, InvalidOperation
+from .models import Order, OrderItem
+
+@csrf_exempt
+def submit_order(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            name = data.get('name')
+            email = data.get('email')
+            address = data.get('address')
+            cart = data.get('cart', [])
+
+            # Создаем заказ
+            order = Order.objects.create(name=name, email=email, address=address)
+
+            # Создаем позиции заказа
+            for item in cart:
+                product_name = item.get('name', '')
+                price_str = str(item.get('price', '0')).replace('₽', '').strip()
+                try:
+                    price = Decimal(price_str)
+                except InvalidOperation:
+                    price = Decimal('0.00')
+
+                OrderItem.objects.create(order=order, product_name=product_name, price=price)
+
+            return JsonResponse({'message': 'Заказ успешно оформлен!'}, status=201)
+        except Exception as e:
+            print('Ошибка при создании заказа:', e)  # Вывод ошибки в консоль для отладки
+            return JsonResponse({'message': f'Ошибка: {str(e)}'}, status=400)
+
+    return JsonResponse({'message': 'Метод не поддерживается'}, status=405)

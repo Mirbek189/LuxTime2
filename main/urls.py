@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import submit_order
 
 
 urlpatterns = [
@@ -14,6 +15,6 @@ urlpatterns = [
     path('cart/', views.cart_view, name='cart'),
     path('favorites/add/<int:product_id>/', views.add_to_favorites, name='add_to_favorites'),
     path('favorites/delete/<int:id>/', views.delete_favorite, name='delete_favorite'),
-
+    path('submit-order/', views.submit_order, name='submit_order'),
 ]
 
