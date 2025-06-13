@@ -70,6 +70,7 @@ class Favorite(models.Model):
 from django.db import models
 
 class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100)
     email = models.EmailField()
     address = models.TextField()
@@ -124,7 +125,7 @@ class Ordels(models.Model):
         ('completed', 'Завершён'),
         ('cancelled', 'Отменён'),
     ]
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100)
     email = models.EmailField()
     address = models.TextField()
