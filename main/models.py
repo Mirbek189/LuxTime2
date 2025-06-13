@@ -115,3 +115,21 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
         UserProfile.objects.create(user=instance)
     else:
         instance.userprofile.save()
+
+
+class Ordels(models.Model):
+    STATUS_CHOICES = [
+        ('new', 'Новый'),
+        ('processing', 'В обработке'),
+        ('completed', 'Завершён'),
+        ('cancelled', 'Отменён'),
+    ]
+
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    address = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')  # ← добавлено
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Заказ #{self.id} от {self.name}'
