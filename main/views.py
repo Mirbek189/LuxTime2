@@ -226,3 +226,59 @@ def submit_order(request):
 
 def blocked_view(request):
     return render(request, 'blocked.html')
+
+
+
+import hashlib
+import hmac
+import time
+from django.conf import settings
+from django.contrib.auth import login, get_user_model
+from django.shortcuts import redirect
+from django.http import HttpResponseBadRequest
+
+User = get_user_model()
+
+def telegram_auth(request):
+    data = request.GET.dict()
+
+
+    required_fields = ['id', 'first_name', 'auth_date', 'hash']
+    if not all(field in data for field in required_fields):
+        return HttpResponseBadRequest("Отсутствуют необходимые данные")
+
+
+    check_hash = data.pop('hash')
+    auth_data_check = '\n'.join(f"{k}={v}" for k, v in sorted(data.items()))
+    secret_key = hashlib.sha256(settings.TELEGRAM_BOT_TOKEN.encode()).digest()
+    hmac_hash = hmac.new(secret_key, auth_data_check.encode(), hashlib.sha256).hexdigest()
+
+    if hmac_hash != check_hash:
+        return HttpResponseBadRequest("Ошибка проверки подписи")
+
+
+    auth_date = int(data.get('auth_date'))
+    if time.time() - auth_date > 86400:
+        return HttpResponseBadRequest("Время авторизации истекло")
+
+    telegram_id = data.get('id')
+    first_name = data.get('first_name')
+    last_name = data.get('last_name', '')
+    username = data.get('username', '')
+
+
+    try:
+        user = User.objects.get(telegram_id=telegram_id)
+    except User.DoesNotExist:
+        user = User.objects.create_user(
+            username=f"tg_{telegram_id}",
+            first_name=first_name,
+            last_name=last_name,
+            telegram_id=telegram_id,
+        )
+
+
+    login(request, user)
+
+
+    return redirect('home')

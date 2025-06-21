@@ -17,5 +17,6 @@ urlpatterns = [
     path('favorites/delete/<int:id>/', views.delete_favorite, name='delete_favorite'),
     path('submit-order/', views.submit_order, name='submit_order'),
     path('blocked/', views.blocked_view, name='blocked'),
+    path('telegram-auth/', views.telegram_auth, name='telegram_auth'),
 ]
 

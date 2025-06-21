@@ -35,7 +35,7 @@
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  filter: brightness(0.5); /* затемнение для читаемости */
+  filter: brightness(0.5);
 }
 
 .hero-content {
@@ -75,81 +75,85 @@
   background-color: #e53e00;
 }
 
+/* Стили для кнопок */
+.register-btn {
+  background-color: #2d3748;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 30px;
+  cursor: pointer;
+  border: 1px solid #FF5B00;
+  transition: background-color 0.3s ease;
+  color: white;
+}
+.register-btn:hover {
+  background-color: #FF5B00;
+}
+.telegram-login-btn {
+  display: inline-block;
+  margin-left: 15px;
+  vertical-align: middle;
+}
 
-    /* Стили для кнопки регистрации */
-    .register-btn {
-      background-color: #2d3748;
-      padding: 15px 30px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-top: 30px;
-      cursor: pointer;
-      border: 1px solid #FF5B00;
-      transition: background-color 0.3s ease;
-    }
+/* Навигация */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 15px 20px;
+}
 
-    .register-btn:hover {
-      background-color: #FF5B00;
-    }
+.nav-bar ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
 
-    /* Навигация */
-    .nav-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 10;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 15px 20px;
-    }
+.nav-bar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
 
-    .nav-bar ul {
-      list-style: none;
-      display: flex;
-      gap: 30px;
-    }
+.nav-bar a:hover {
+  color: #FF5B00;
+}
 
-    .nav-bar a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.2rem;
-      transition: color 0.3s ease;
-    }
+.nav-bar .register-btn {
+  background-color: #2d3748;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border: 1px solid #FF5B00;
+  transition: background-color 0.3s ease;
+}
 
-    .nav-bar a:hover {
-      color: #FF5B00;
-    }
+.nav-bar .register-btn:hover {
+  background-color: #FF5B00;
+}
 
-    .nav-bar .register-btn {
-      background-color: #2d3748;
-      padding: 12px 24px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      cursor: pointer;
-      border: 1px solid #FF5B00;
-      transition: background-color 0.3s ease;
-    }
+/* 3D карточка и подсветка углов */
+#threeDCardWrapper {
+  perspective: 1000px;
+}
 
-    .nav-bar .register-btn:hover {
-      background-color: #FF5B00;
-    }
-
-    /* 3D карточка и подсветка углов */
-    #threeDCardWrapper {
-      perspective: 1000px;
-    }
-
-    #threeDCard {
-      transform-style: preserve-3d;
-      will-change: transform;
-      user-select: none;
-    }
+#threeDCard {
+  transform-style: preserve-3d;
+  will-change: transform;
+  user-select: none;
+}
   </style>
 </head>
 <body>
@@ -159,15 +163,25 @@
     <ul>
       <li><a href="#">Главная</a></li>
       <li><a href="about">О нас</a></li>
-<li><a href="{% url 'account' %}">Личный кабинет</a></li>
-
+      <li><a href="{% url 'account' %}">Личный кабинет</a></li>
       <li><a href="contact">Контакты</a></li>
       <li><a href="cart">Корзина</a></li>
     </ul>
-    <a href="registration"><button class="register-btn">Регистрация</button></a>
+
+    <div class="flex items-center">
+      <a href="registration"><button class="register-btn">Регистрация</button></a>
+
+      <!-- Telegram Login Widget -->
+      <div class="telegram-login-btn">
+        <script async src="https://telegram.org/js/telegram-widget.js?22"
+          data-telegram-login="LuxLoginBot"
+          data-size="medium"
+          data-auth-url="{% url 'telegram_auth' %}"
+          data-request-access="write">
+        </script>
+      </div>
+    </div>
   </header>
-
-
 
 <section class="hero">
   <video autoplay muted loop playsinline class="hero-video">
@@ -184,10 +198,8 @@
   </div>
 </section>
 
-
   <!-- Первый блок: изысканные часы (картинка слева, текст справа) -->
   <section class="max-w-7xl mx-auto mt-32 px-6 md:px-12 py-20 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-16">
-    <!-- Левая часть — большая картинка -->
     <div class="flex-1 order-1">
       <img
         src="https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -197,7 +209,6 @@
       />
     </div>
 
-    <!-- Правая часть — большое описание -->
     <div class="flex-1 text-white max-w-xl order-2">
       <h2 class="text-5xl font-extrabold mb-8 tracking-tight leading-tight drop-shadow-lg">
         Изысканный дизайн и высочайшее качество
@@ -212,7 +223,6 @@
 
   <!-- Второй блок: Rolex (картинка справа, текст слева) -->
   <section class="max-w-7xl mx-auto mt-32 px-6 md:px-12 py-20 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 rounded-3xl shadow-2xl flex flex-col md:flex-row-reverse items-center gap-16">
-    <!-- Правая часть — изображение Rolex -->
     <div class="flex-1 order-1">
       <img
         src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80"
@@ -222,7 +232,6 @@
       />
     </div>
 
-    <!-- Левая часть — описание -->
     <div class="flex-1 text-white max-w-xl order-2">
       <h2 class="text-5xl font-extrabold mb-6 tracking-tight leading-tight drop-shadow-lg">
         Наручные часы Rolex — символ престижа и точности
@@ -237,10 +246,9 @@
       </a>
     </div>
   </section>
-<!-- Чистый блоки с часами и описанием -->
+
 <section class="max-w-7xl mx-auto mt-32 px-6 md:px-12 space-y-32">
 
-  <!-- Первый: картинка слева, текст справа -->
   <div class="flex flex-col md:flex-row items-center gap-12">
     <img
       src="https://images.unsplash.com/photo-1606744188285-d0a49e58f538?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -258,7 +266,6 @@
     </div>
   </div>
 
-  <!-- Второй: картинка справа, текст слева -->
   <div class="flex flex-col md:flex-row-reverse items-center gap-12">
     <img
       src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -276,7 +283,6 @@
     </div>
   </div>
 
-  <!-- Третий: картинка слева, текст справа -->
   <div class="flex flex-col md:flex-row items-center gap-12">
     <img
       src="https://images.unsplash.com/photo-1662384197911-e82189f4dc60?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -296,7 +302,6 @@
 
 </section>
 
-<!-- Контакты и связь с нами -->
 <section class="bg-gray-900 py-20 mt-32">
   <div class="max-w-7xl mx-auto text-center text-white">
     <h2 class="text-4xl font-extrabold mb-8">Связаться с нами</h2>
@@ -315,7 +320,6 @@
   </div>
 </section>
 
-<!-- Подвал -->
 <footer class="bg-black py-6 text-center text-white">
   <p>&copy; 2025 LuxTime. Все права защищены.</p>
 </footer>
@@ -363,4 +367,3 @@
 
 </body>
 </html>
-

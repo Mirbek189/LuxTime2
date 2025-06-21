@@ -132,3 +132,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+AUTH_USER_MODEL = 'main.CustomUser'
+TELEGRAM_BOT_TOKEN = '7657997031:AAHUZ7ILUn0ubB_JQ141bL-CZXyHYuXEouo'
+
